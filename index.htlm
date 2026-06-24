@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>An Phan — Game Producer & Project Lead</title>
+<meta name="description" content="An Phan: project lead, game designer and producer. Interactive CV & portfolio.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0c0e14;
+  --ink-2:#13161f;
+  --panel:#1a1e2a;
+  --panel-2:#222736;
+  --line:#2c3242;
+  --fog:#8b93a7;
+  --fog-2:#aeb6c8;
+  --paper:#ece6d8;
+  --gold:#d8a657;
+  --gold-soft:#e8c889;
+  --cyan:#6fcad6;
+  --rose:#c97b8b;
+  --white:#f4f1ea;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--ink);
+  color:var(--fog-2);
+  font-family:'Space Grotesk',system-ui,sans-serif;
+  font-size:17px;
+  line-height:1.6;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+.mono{font-family:'JetBrains Mono',monospace}
+.serif{font-family:'Fraunces',serif}
+
+/* ---------- intro / decipher splash ---------- */
+#splash{
+  position:fixed;inset:0;z-index:1000;
+  background:radial-gradient(circle at 50% 40%, #1a1e2a 0%, #0c0e14 70%);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  transition:opacity .9s ease, visibility .9s ease;
+}
+#splash.gone{opacity:0;visibility:hidden;pointer-events:none}
+.cipher-line{
+  font-family:'JetBrains Mono',monospace;
+  font-size:clamp(1.6rem,6vw,3.6rem);
+  letter-spacing:.18em;
+  color:var(--gold);
+  min-height:1.3em;
+}
+.splash-sub{
+  margin-top:1.4rem;color:var(--fog);font-size:.78rem;letter-spacing:.32em;
+  text-transform:uppercase;font-family:'JetBrains Mono',monospace;
+  opacity:0;animation:fadeIn 1s ease 1.4s forwards;
+}
+.splash-skip{
+  position:absolute;bottom:2rem;font-size:.7rem;letter-spacing:.2em;color:var(--line);
+  text-transform:uppercase;cursor:pointer;font-family:'JetBrains Mono',monospace;
+  background:none;border:none;transition:color .3s;
+}
+.splash-skip:hover{color:var(--fog)}
+@keyframes fadeIn{to{opacity:1}}
+
+/* ---------- nav ---------- */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.1rem clamp(1.2rem,4vw,3.5rem);
+  background:rgba(12,14,20,.0);
+  transition:background .4s ease, border-color .4s ease;
+  border-bottom:1px solid transparent;
+}
+nav.solid{background:rgba(12,14,20,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav-name{font-family:'Fraunces',serif;font-weight:600;font-size:1.15rem;color:var(--white);letter-spacing:.01em}
+.nav-name span{color:var(--gold)}
+.nav-links{display:flex;gap:2rem;align-items:center}
+.nav-links a{
+  color:var(--fog);text-decoration:none;font-size:.82rem;letter-spacing:.08em;
+  text-transform:uppercase;font-family:'JetBrains Mono',monospace;transition:color .25s;
+}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{
+  border:1px solid var(--gold);color:var(--gold)!important;padding:.45rem .9rem;border-radius:2px;
+}
+.nav-cta:hover{background:var(--gold);color:var(--ink)!important}
+.menu-btn{display:none;background:none;border:none;color:var(--white);font-size:1.5rem;cursor:pointer}
+@media(max-width:820px){
+  .nav-links{
+    position:fixed;inset:0;background:var(--ink);flex-direction:column;justify-content:center;
+    gap:2rem;transform:translateX(100%);transition:transform .4s ease;
+  }
+  .nav-links.open{transform:translateX(0)}
+  .nav-links a{font-size:1.1rem}
+  .menu-btn{display:block;z-index:101}
+}
+
+/* ---------- hero ---------- */
+.hero{
+  min-height:100vh;display:flex;align-items:center;
+  padding:7rem clamp(1.2rem,4vw,3.5rem) 4rem;
+  position:relative;overflow:hidden;
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:64px 64px;opacity:.12;
+  mask-image:radial-gradient(circle at 70% 50%, black 0%, transparent 75%);
+}
+.hero-inner{position:relative;max-width:1180px;margin:0 auto;width:100%;
+  display:grid;grid-template-columns:1.15fr .85fr;gap:3rem;align-items:center}
+.hero-eyebrow{
+  font-family:'JetBrains Mono',monospace;font-size:.78rem;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:1.6rem;
+  display:flex;align-items:center;gap:.7rem;
+}
+.hero-eyebrow::before{content:"";width:34px;height:1px;background:var(--gold)}
+h1.hero-title{
+  font-family:'Fraunces',serif;font-weight:600;
+  font-size:clamp(2.7rem,7vw,5.4rem);line-height:1.02;color:var(--white);
+  letter-spacing:-.01em;margin-bottom:1.4rem;
+}
+h1.hero-title em{font-style:italic;color:var(--gold)}
+.hero-lede{font-size:1.12rem;color:var(--fog-2);max-width:46ch;margin-bottom:2.2rem}
+.hero-lede strong{color:var(--white);font-weight:500}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
+.btn{
+  font-family:'JetBrains Mono',monospace;font-size:.82rem;letter-spacing:.06em;
+  padding:.85rem 1.4rem;border-radius:2px;text-decoration:none;cursor:pointer;
+  display:inline-flex;align-items:center;gap:.5rem;transition:all .25s;border:1px solid var(--gold);
+}
+.btn-primary{background:var(--gold);color:var(--ink);font-weight:600}
+.btn-primary:hover{background:var(--gold-soft);transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:var(--gold)}
+.btn-ghost:hover{background:rgba(216,166,87,.1)}
+.hero-portrait{
+  position:relative;justify-self:center;
+}
+.portrait-frame{
+  width:clamp(220px,28vw,320px);aspect-ratio:1;border-radius:50%;
+  overflow:hidden;border:1px solid var(--line);position:relative;
+  box-shadow:0 0 0 8px rgba(216,166,87,.05), 0 30px 60px rgba(0,0,0,.5);
+}
+.portrait-frame img{width:100%;height:100%;object-fit:cover;filter:grayscale(.15) contrast(1.05)}
+.portrait-ring{
+  position:absolute;inset:-22px;border:1px solid var(--gold);border-radius:50%;
+  opacity:.35;animation:spin 40s linear infinite;
+}
+.portrait-ring::before{content:"◆";position:absolute;top:-9px;left:50%;color:var(--gold);font-size:.8rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+.portrait-tag{
+  position:absolute;bottom:6%;left:-8%;background:var(--panel);border:1px solid var(--line);
+  padding:.6rem .9rem;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:.72rem;
+  color:var(--fog-2);box-shadow:0 12px 24px rgba(0,0,0,.4);
+}
+.portrait-tag b{color:var(--gold)}
+@media(max-width:820px){
+  .hero-inner{grid-template-columns:1fr;gap:2.5rem}
+  .hero-portrait{order:-1}
+  .hero-lede{max-width:none}
+}
+
+/* ---------- section scaffold ---------- */
+section{padding:clamp(4rem,9vw,7rem) clamp(1.2rem,4vw,3.5rem);position:relative}
+.wrap{max-width:1180px;margin:0 auto}
+.sec-head{margin-bottom:3rem}
+.sec-eyebrow{
+  font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.26em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:.9rem;display:flex;align-items:center;gap:.7rem;
+}
+.sec-eyebrow .num{color:var(--fog);opacity:.6}
+h2.sec-title{
+  font-family:'Fraunces',serif;font-weight:600;font-size:clamp(2rem,5vw,3.2rem);
+  color:var(--white);line-height:1.05;letter-spacing:-.01em;
+}
+h2.sec-title em{font-style:italic;color:var(--gold)}
+.sec-sub{color:var(--fog);max-width:54ch;margin-top:1rem}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease, transform .8s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* ---------- metrics ---------- */
+#impact{background:var(--ink-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.metric{background:var(--ink-2);padding:2.2rem 1.6rem;transition:background .3s}
+.metric:hover{background:var(--panel)}
+.metric-num{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(2.4rem,5vw,3.4rem);
+  color:var(--gold);line-height:1;letter-spacing:-.02em}
+.metric-num .unit{font-size:.5em;color:var(--gold-soft)}
+.metric-label{margin-top:.7rem;font-size:.9rem;color:var(--fog-2)}
+.metric-ctx{margin-top:.3rem;font-family:'JetBrains Mono',monospace;font-size:.7rem;
+  letter-spacing:.04em;color:var(--fog);text-transform:uppercase}
+@media(max-width:760px){.metric-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.metric-grid{grid-template-columns:1fr}}
+
+/* ---------- featured project ---------- */
+#decypher{background:linear-gradient(180deg,var(--ink) 0%, #11131c 100%)}
+.proj-card{
+  border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--panel);
+  box-shadow:0 30px 80px rgba(0,0,0,.45);
+}
+.proj-top{display:grid;grid-template-columns:1.1fr .9fr}
+.proj-frame{position:relative;background:#000;min-height:340px}
+.proj-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.proj-poster{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;
+  background:radial-gradient(circle at 50% 40%,#2a2030,#0c0e14);cursor:pointer;z-index:2;transition:opacity .4s;
+}
+.proj-poster.hidden{opacity:0;pointer-events:none}
+.play-btn{
+  width:74px;height:74px;border-radius:50%;border:1px solid var(--gold);
+  display:flex;align-items:center;justify-content:center;background:rgba(216,166,87,.12);
+  transition:all .3s;
+}
+.proj-poster:hover .play-btn{background:var(--gold);transform:scale(1.08)}
+.play-btn svg{fill:var(--gold);transition:fill .3s}
+.proj-poster:hover .play-btn svg{fill:var(--ink)}
+.poster-label{margin-top:1.2rem;font-family:'JetBrains Mono',monospace;font-size:.78rem;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--fog-2)}
+.poster-hint{margin-top:.5rem;font-family:'JetBrains Mono',monospace;font-size:.66rem;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--gold);opacity:.85}
+.proj-info{padding:2.4rem 2.2rem;display:flex;flex-direction:column}
+.proj-badges{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.2rem}
+.badge{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.08em;
+  padding:.28rem .6rem;border:1px solid var(--line);border-radius:2px;color:var(--fog-2);text-transform:uppercase}
+.badge.hot{border-color:var(--gold);color:var(--gold)}
+.proj-title{font-family:'Fraunces',serif;font-weight:600;font-size:1.9rem;color:var(--white);line-height:1.1;margin-bottom:.3rem}
+.proj-role{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--gold);letter-spacing:.04em;margin-bottom:1.1rem}
+.proj-desc{color:var(--fog-2);font-size:1rem;margin-bottom:1.4rem}
+.proj-desc b{color:var(--gold);font-weight:600}
+.proj-stats{display:flex;gap:1.8rem;margin-bottom:1.6rem;flex-wrap:wrap}
+.proj-stat b{display:block;font-family:'Fraunces',serif;font-size:1.5rem;color:var(--white)}
+.proj-stat span{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--fog);text-transform:uppercase;letter-spacing:.06em}
+.proj-links{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:auto}
+.proj-bottom{border-top:1px solid var(--line);padding:1.6rem 2.2rem;background:var(--ink-2);
+  display:flex;gap:2rem;flex-wrap:wrap}
+.contrib{flex:1;min-width:200px}
+.contrib h4{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:.6rem}
+.contrib p{font-size:.9rem;color:var(--fog-2)}
+@media(max-width:820px){.proj-top{grid-template-columns:1fr}.proj-frame{min-height:240px}}
+
+/* ---------- timeline ---------- */
+.tl{position:relative;margin-left:1rem}
+.tl::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:1px;
+  background:linear-gradient(var(--gold),var(--line))}
+.tl-item{position:relative;padding-left:2.4rem;padding-bottom:2.6rem}
+.tl-item:last-child{padding-bottom:0}
+.tl-dot{position:absolute;left:0;top:5px;width:15px;height:15px;border-radius:50%;
+  background:var(--ink);border:1px solid var(--gold);transition:all .3s}
+.tl-item:hover .tl-dot{background:var(--gold);box-shadow:0 0 0 5px rgba(216,166,87,.15)}
+.tl-date{font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.06em;color:var(--gold);margin-bottom:.3rem}
+.tl-role{font-family:'Fraunces',serif;font-weight:600;font-size:1.25rem;color:var(--white);line-height:1.2}
+.tl-org{font-size:.92rem;color:var(--fog);margin-bottom:.7rem}
+.tl-org b{color:var(--fog-2)}
+.tl-points{list-style:none}
+.tl-points li{position:relative;padding-left:1.1rem;font-size:.95rem;color:var(--fog-2);margin-bottom:.35rem}
+.tl-points li::before{content:"›";position:absolute;left:0;color:var(--gold)}
+.tl-points li b{color:var(--white);font-weight:500}
+
+/* ---------- leadership cards ---------- */
+.lead-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem}
+.lead-card{
+  border:1px solid var(--line);border-radius:5px;background:var(--panel);padding:1.8rem;
+  cursor:pointer;transition:all .3s;position:relative;overflow:hidden;
+}
+.lead-card::after{content:"+";position:absolute;top:1.3rem;right:1.4rem;color:var(--gold);
+  font-family:'JetBrains Mono',monospace;font-size:1.1rem;transition:transform .3s}
+.lead-card.open::after{transform:rotate(45deg)}
+.lead-card:hover{border-color:var(--gold);background:var(--panel-2)}
+.lead-tag{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:.7rem}
+.lead-h{font-family:'Fraunces',serif;font-weight:600;font-size:1.25rem;color:var(--white);
+  line-height:1.2;margin-bottom:.5rem;max-width:90%}
+.lead-teaser{font-size:.92rem;color:var(--fog)}
+.lead-body{max-height:0;overflow:hidden;transition:max-height .45s ease, margin .45s ease}
+.lead-card.open .lead-body{max-height:340px;margin-top:1rem}
+.lead-body p{font-size:.92rem;color:var(--fog-2);margin-bottom:.7rem}
+.lead-body .paro{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--gold);
+  text-transform:uppercase;letter-spacing:.1em;margin-bottom:.2rem;margin-top:.8rem}
+@media(max-width:760px){.lead-grid{grid-template-columns:1fr}}
+
+/* ---------- skills ---------- */
+#skills{background:var(--ink-2);border-top:1px solid var(--line)}
+.skill-cols{display:grid;grid-template-columns:1fr 1.3fr;gap:3rem}
+.lang-row{margin-bottom:1.3rem}
+.lang-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.4rem}
+.lang-name{font-family:'Fraunces',serif;font-size:1.1rem;color:var(--white)}
+.lang-lvl{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--gold);letter-spacing:.06em}
+.lang-bar{height:5px;background:var(--line);border-radius:3px;overflow:hidden}
+.lang-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-soft));width:0;
+  border-radius:3px;transition:width 1.2s cubic-bezier(.2,.8,.2,1)}
+.tool-group{margin-bottom:1.4rem}
+.tool-group h4{font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:.7rem}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem}
+.chip{font-family:'JetBrains Mono',monospace;font-size:.78rem;padding:.4rem .8rem;
+  border:1px solid var(--line);border-radius:3px;color:var(--fog-2);background:var(--ink);transition:all .25s}
+.chip:hover{border-color:var(--gold);color:var(--gold)}
+@media(max-width:760px){.skill-cols{grid-template-columns:1fr;gap:2.4rem}}
+
+/* ---------- activities ---------- */
+.act-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem}
+.act{border:1px solid var(--line);border-left:2px solid var(--gold);border-radius:4px;
+  padding:1.5rem 1.6rem;background:var(--panel);transition:transform .3s,border-color .3s}
+.act:hover{transform:translateY(-3px)}
+.act-tag{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:.6rem}
+.act h4{font-family:'Fraunces',serif;font-size:1.15rem;color:var(--white);margin-bottom:.4rem;line-height:1.25}
+.act p{font-size:.9rem;color:var(--fog)}
+.act a{color:var(--cyan);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s}
+.act a:hover{border-color:var(--cyan)}
+@media(max-width:760px){.act-grid{grid-template-columns:1fr}}
+
+/* ---------- contact ---------- */
+#contact{text-align:center;background:radial-gradient(circle at 50% 0%,#1a1e2a,var(--ink) 70%)}
+.contact-cipher{font-family:'JetBrains Mono',monospace;font-size:.8rem;letter-spacing:.3em;
+  color:var(--gold);text-transform:uppercase;margin-bottom:1.4rem}
+.contact-h{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(2.2rem,6vw,4rem);
+  color:var(--white);line-height:1.05;margin-bottom:1.6rem}
+.contact-h em{font-style:italic;color:var(--gold)}
+.contact-links{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:2.2rem}
+footer{padding:2.5rem;text-align:center;border-top:1px solid var(--line);
+  font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--fog);letter-spacing:.06em}
+footer .eg{color:var(--gold);cursor:pointer}
+
+/* easter egg toast */
+#egg{position:fixed;bottom:1.5rem;left:50%;transform:translate(-50%,140%);z-index:200;
+  background:var(--gold);color:var(--ink);padding:.9rem 1.4rem;border-radius:3px;
+  font-family:'JetBrains Mono',monospace;font-size:.82rem;font-weight:600;
+  box-shadow:0 16px 40px rgba(0,0,0,.5);transition:transform .5s cubic-bezier(.2,.9,.2,1)}
+#egg.show{transform:translate(-50%,0)}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+}
+::selection{background:var(--gold);color:var(--ink)}
+</style>
+</head>
+<body>
+
+<!-- splash -->
+<div id="splash">
+  <div class="cipher-line mono" id="cipher"></div>
+  <div class="splash-sub">decrypting profile…</div>
+  <button class="splash-skip mono" onclick="endSplash()">skip ↵</button>
+</div>
+
+<!-- nav -->
+<nav id="nav">
+  <div class="nav-name">An <span>Phan</span></div>
+  <div class="nav-links" id="navlinks">
+    <a href="#decypher" onclick="closeMenu()">Work</a>
+    <a href="#journey" onclick="closeMenu()">Journey</a>
+    <a href="#leadership" onclick="closeMenu()">Leadership</a>
+    <a href="#skills" onclick="closeMenu()">Skills</a>
+    <a href="#contact" class="nav-cta" onclick="closeMenu()">Contact</a>
+  </div>
+  <button class="menu-btn" onclick="toggleMenu()" id="menubtn">☰</button>
+</nav>
+
+<!-- hero -->
+<header class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">Project Lead · Game Designer · Producer</div>
+      <h1 class="hero-title">I bring <em>structure</em> to creative chaos.</h1>
+      <p class="hero-lede">Business graduate turned game producer. I lead multidisciplinary teams, keep production pipelines moving, and turn <strong>scattered ideas into shipped products</strong> — most recently a language-puzzle game presented at Supercell.</p>
+      <div class="hero-actions">
+        <a href="#decypher" class="btn btn-primary">▶ See my shipped game</a>
+        <a href="#" class="btn btn-ghost" id="dlBtn">↓ Download CV</a>
+      </div>
+    </div>
+    <div class="hero-portrait">
+      <div class="portrait-ring"></div>
+      <div class="portrait-frame">
+        <img src="portrait.jpg" alt="An Phan portrait">
+      </div>
+      <div class="portrait-tag mono">Helsinki, FI · <b>open to work</b></div>
+    </div>
+  </div>
+</header>
+
+<!-- impact metrics -->
+<section id="impact">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow"><span class="num">01</span> Impact at a glance</div>
+      <h2 class="sec-title">Numbers I've <em>moved.</em></h2>
+    </div>
+    <div class="metric-grid reveal">
+      <div class="metric"><div class="metric-num"><span data-count="600" data-suffix="+"></span></div><div class="metric-label">Organic followers built</div><div class="metric-ctx">From zero · in 3 months</div></div>
+      <div class="metric"><div class="metric-num">€<span data-count="3690"></span></div><div class="metric-label">Raised via crowdfunding</div><div class="metric-ctx">Short film campaign</div></div>
+      <div class="metric"><div class="metric-num"><span data-count="25" data-suffix="%"></span></div><div class="metric-label">User retention lift</div><div class="metric-ctx">Data-driven content</div></div>
+      <div class="metric"><div class="metric-num"><span data-count="20" data-suffix="%"></span></div><div class="metric-label">Operational cost cut</div><div class="metric-ctx">Partner negotiation</div></div>
+      <div class="metric"><div class="metric-num"><span data-count="300" data-suffix="+"></span></div><div class="metric-label">Products sold in a day</div><div class="metric-ctx">Promo event</div></div>
+      <div class="metric"><div class="metric-num">4<span class="unit">th</span></div><div class="metric-label">Supercell AI Hackathon</div><div class="metric-ctx">As team lead · 2025</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- featured: DeCypher -->
+<section id="decypher">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow"><span class="num">02</span> Featured work</div>
+      <h2 class="sec-title">Dream DeCypher — <em>play on web-browser (PC or Mobile).</em></h2>
+      <p class="sec-sub">A 100% context-based language learning puzzle game set inside a detective game. I led a team of three from concept to a shipped, playable build — presented at Supercell Games First 2026.</p>
+    </div>
+    <div class="proj-card reveal">
+      <div class="proj-top">
+        <div class="proj-frame">
+          <div class="proj-poster" id="poster" onclick="loadGame()">
+            <div class="play-btn"><svg width="26" height="26" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+            <div class="poster-label mono">Play in browser ↗</div>
+            <div class="poster-hint mono">PC &amp; mobile · sound on</div>
+          </div>
+        </div>
+        <div class="proj-info">
+          <div class="proj-badges">
+            <span class="badge hot">★ 4.7 / 5</span>
+            <span class="badge">Unity</span>
+            <span class="badge">Puzzle</span>
+            <span class="badge">PC + Mobile</span>
+          </div>
+          <div class="proj-title">DeCypher: Dream Intruder</div>
+          <div class="proj-role mono">Project Lead & Lead Game Designer</div>
+          <p class="proj-desc">Dream DeCypher is a language detective puzzle game. Listen. Observe. Decode. Connect. Crack the case. Currently available in Mandarin Chinese for decoding. <b>No prior language knowledge needed</b> — just jump in, solve puzzles, and the language will unlock itself.</p>
+          <div class="proj-stats">
+            <div class="proj-stat"><b>3</b><span>person team</span></div>
+            <div class="proj-stat"><b>1st</b><span>funding secured</span></div>
+            <div class="proj-stat"><b>Live</b><span>on itch.io</span></div>
+          </div>
+          <div class="proj-links">
+            <a href="https://youtu.be/iTMbiPefn-A" target="_blank" rel="noopener" class="btn btn-ghost">▶ Watch trailer</a>
+            <a href="https://dream-decypher.itch.io/decypher1-dream-intruder" target="_blank" rel="noopener" class="btn btn-ghost">↗ Open on itch.io</a>
+          </div>
+        </div>
+      </div>
+      <div class="proj-bottom">
+        <div class="contrib"><h4>I led on</h4><p>Production pipeline, agile scheduling, shared docs & dashboards keeping all disciplines aligned to ship.</p></div>
+        <div class="contrib"><h4>I designed</h4><p>Core puzzle loop and game logic progression — players "solve" a language through context, logic and gameplay. The closest experience to how a baby learns its first language.</p></div>
+        <div class="contrib"><h4>I drove</h4><p>User-acquisition strategy, metric analysis, and the funding pitch that secured a Startup Foundation Grant.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- journey -->
+<section id="journey">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow"><span class="num">03</span> The path</div>
+      <h2 class="sec-title">From operations to <em>production lead.</em></h2>
+      <p class="sec-sub">Not a scattered history — a deliberate route toward leading creative teams. Every role added a layer: ops discipline, QA rigor, marketing instinct, then production leadership.</p>
+    </div>
+    <div class="tl reveal">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date mono">Jun 2025 — Present</div>
+        <div class="tl-role">Project Lead / Lead Game Designer</div>
+        <div class="tl-org"><b>DeCypher</b> · Game studio</div>
+        <ul class="tl-points">
+          <li>Shipped a language puzzle game; <b>presented at Supercell Games First 2026</b></li>
+          <li>Lead a multidisciplinary team of 3 with a clear production pipeline & agile schedule</li>
+          <li>Secured first funding via the <b>Startup Foundation Grant</b></li>
+          <li>Drive user-acquisition strategy and iterate on product metrics</li>
+        </ul>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date mono">Apr 2024 — Feb 2025</div>
+        <div class="tl-role">Business & Marketing Developer</div>
+        <div class="tl-org">Lakeside Games · <b>Espoo Game Lab</b></div>
+        <ul class="tl-points">
+          <li>Built community presence <b>from zero to 600+ organic followers in 3 months</b></li>
+          <li>Managed communication pipelines, ensuring cross-team alignment</li>
+          <li>Led business planning and marketing strategy</li>
+        </ul>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date mono">Aug 2020 — Apr 2023</div>
+        <div class="tl-role">Senior Production Specialist · QA Team</div>
+        <div class="tl-org"><b>Swappie Oy</b></div>
+        <ul class="tl-points">
+          <li>Consistent high-quality output across fast-paced cycles — <b>Employee of the Month</b></li>
+          <li>Provided administrative support, maintaining structured workflows</li>
+        </ul>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date mono">Mar 2019 — Mar 2020</div>
+        <div class="tl-role">Co-Founder</div>
+        <div class="tl-org"><b>MISUBEI</b> · F&B, Helsinki</div>
+        <ul class="tl-points">
+          <li>Co-founded a food & beverage company from the ground up</li>
+          <li>Ran inventory, logistics and daily operations; <b>negotiated 20% lower costs</b></li>
+          <li>Organized promo events selling <b>300+ products in a single day</b></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- leadership -->
+<section id="leadership">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow"><span class="num">04</span> Leadership & team-building</div>
+      <h2 class="sec-title">I get people <em>aligned and moving.</em></h2>
+      <p class="sec-sub">Tap any card to open the story — problem, what I did, what happened.</p>
+    </div>
+    <div class="lead-grid reveal">
+      <div class="lead-card" onclick="toggleCard(this)">
+        <div class="lead-tag mono">Game production</div>
+        <div class="lead-h">Leading a 3-person gamedev team to ship</div>
+        <div class="lead-teaser">Keeping designers, devs and art aligned under one pipeline.</div>
+        <div class="lead-body">
+          <div class="paro mono">Problem</div><p>A small multidisciplinary team with no shared source of truth risks drift and missed scope.</p>
+          <div class="paro mono">Action</div><p>Set up agile scheduling, shared documentation and live dashboards so every discipline could see project status at any moment.</p>
+          <div class="paro mono">Outcome</div><p>A shipped, 4.7★-rated playable build — presented at Supercell Games First 2026.</p>
+        </div>
+      </div>
+      <div class="lead-card" onclick="toggleCard(this)">
+        <div class="lead-tag mono">Hackathon</div>
+        <div class="lead-h">Team Lead — Supercell AI Hackathon</div>
+        <div class="lead-teaser">Steering a team to 4th place under time pressure.</div>
+        <div class="lead-body">
+          <div class="paro mono">Problem</div><p>Build and present a working game in a high-pressure hackathon window.</p>
+          <div class="paro mono">Action</div><p>Led scoping, divided work to strengths, and kept the team on a shippable critical path.</p>
+          <div class="paro mono">Outcome</div><p><b>4th place</b> at the Supercell AI Game Hackathon 2025; returned for the Global AI Game Hack 2026.</p>
+        </div>
+      </div>
+      <div class="lead-card" onclick="toggleCard(this)">
+        <div class="lead-tag mono">Event management</div>
+        <div class="lead-h">Head Organiser — cultural music event</div>
+        <div class="lead-teaser">End-to-end production for a 100+ attendee event.</div>
+        <div class="lead-body">
+          <div class="paro mono">Problem</div><p>Stage a Vietnamese cultural music event at Oodi Library with full logistics ownership.</p>
+          <div class="paro mono">Action</div><p>Handled end-to-end management — programming, logistics, coordination and on-the-day execution.</p>
+          <div class="paro mono">Outcome</div><p>"Share and Honour — Trịnh Công Sơn" drew <b>100+ attendees</b>.</p>
+        </div>
+      </div>
+      <div class="lead-card" onclick="toggleCard(this)">
+        <div class="lead-tag mono">Industry & mentorship</div>
+        <div class="lead-h">Volunteer coordinator & facilitator</div>
+        <div class="lead-teaser">Logistics for major games-industry events; mentoring students.</div>
+        <div class="lead-body">
+          <div class="paro mono">Where</div><p>Conference Volunteer Coordinator for Arctic 15, Games Helsinki, IGDA Helsinki and Pocket Gamer Connects.</p>
+          <div class="paro mono">Also</div><p>PM Workshop Facilitator at Lahti UAS; solo-organised a two-week extracurricular programme for international students.</p>
+          <div class="paro mono">Outcome</div><p>Smooth logistics across major industry events and a track record of mentoring.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- skills -->
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow"><span class="num">05</span> Toolkit</div>
+      <h2 class="sec-title">Languages &amp; <em>tools.</em></h2>
+    </div>
+    <div class="skill-cols">
+      <div class="reveal" id="langs">
+        <div class="tool-group"><h4>Languages</h4></div>
+        <div class="lang-row"><div class="lang-top"><span class="lang-name">Vietnamese</span><span class="lang-lvl mono">Native</span></div><div class="lang-bar"><div class="lang-fill" data-w="100"></div></div></div>
+        <div class="lang-row"><div class="lang-top"><span class="lang-name">English</span><span class="lang-lvl mono">Fluent</span></div><div class="lang-bar"><div class="lang-fill" data-w="92"></div></div></div>
+        <div class="lang-row"><div class="lang-top"><span class="lang-name">Finnish</span><span class="lang-lvl mono">B1</span></div><div class="lang-bar"><div class="lang-fill" data-w="55"></div></div></div>
+        <div class="lang-row"><div class="lang-top"><span class="lang-name">Chinese</span><span class="lang-lvl mono">B1</span></div><div class="lang-bar"><div class="lang-fill" data-w="55"></div></div></div>
+      </div>
+      <div class="reveal">
+        <div class="tool-group"><h4>Project & PM</h4><div class="chips"><span class="chip">Jira</span><span class="chip">Trello</span><span class="chip">Notion</span><span class="chip">Google Workspace</span><span class="chip">Miro</span></div></div>
+        <div class="tool-group"><h4>Communication & Collab</h4><div class="chips"><span class="chip">Discord</span><span class="chip">Slack</span><span class="chip">Figma</span><span class="chip">Canva</span></div></div>
+        <div class="tool-group"><h4>AI & Productivity</h4><div class="chips"><span class="chip">Claude</span><span class="chip">ChatGPT</span><span class="chip">Gemini</span></div></div>
+        <div class="tool-group"><h4>Technical</h4><div class="chips"><span class="chip">Unity (basic)</span><span class="chip">Git</span><span class="chip">CapCut</span><span class="chip">TikTok Effect House</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- activities -->
+<section id="activities">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow"><span class="num">06</span> Beyond the desk</div>
+      <h2 class="sec-title">Other <em>signals.</em></h2>
+    </div>
+    <div class="act-grid reveal">
+      <div class="act"><div class="act-tag mono">Hackathons</div><h4>Supercell AI Game Hacks</h4><p>4th-place winner (2025) as Team Lead; delivered a playable game at the Global AI Game Hack 2026.</p></div>
+      <div class="act"><div class="act-tag mono">Film</div><h4>Short film producer</h4><p>Producer of a marketing short film. <a href="https://www.youtube.com/watch?v=3vxekShtnjs" target="_blank" rel="noopener">Watch ↗</a></p></div>
+      <div class="act"><div class="act-tag mono">Education</div><h4>Business Administration, B.A.</h4><p>Lahti University of Applied Sciences. Erasmus+ exchange in Film Marketing at Southampton Solent, England.</p></div>
+      <div class="act"><div class="act-tag mono">Mentorship</div><h4>Facilitator & ambassador</h4><p>PM Workshop facilitator, student ambassador, and swimming instructor — all built on curriculum planning and clear communication.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- contact -->
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-cipher mono reveal">// end of file — let's talk</div>
+    <h2 class="contact-h reveal">Building something that needs <em>structure?</em></h2>
+    <div class="contact-links reveal">
+      <a href="mailto:phanlethuyan@gmail.com" class="btn btn-primary">✉ phanlethuyan@gmail.com</a>
+      <a href="https://www.linkedin.com/in/an-phan-65277298" target="_blank" rel="noopener" class="btn btn-ghost">in · LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  · An Phan · 2026 · &nbsp;<span class="eg" onclick="reveal()" style="opacity:0;cursor:default"> </span>
+</footer>
+
+<div id="egg" class="mono">◆ Nothing here is random. — DeCypher</div>
+
+<script>
+// ---- splash decipher animation ----
+const target = "AN PHAN";
+const glyphs = "▓▒░#@%&$?*▚◆◢◣01";
+const el = document.getElementById('cipher');
+let frame = 0, done = false;
+function scramble(){
+  if(done) return;
+  let out = "";
+  for(let i=0;i<target.length;i++){
+    if(target[i]===" "){ out+=" "; continue; }
+    const settled = i < frame/3;
+    out += settled ? target[i] : glyphs[Math.floor(Math.random()*glyphs.length)];
+  }
+  el.textContent = out;
+  frame++;
+  if(frame/3 > target.length+1){ el.textContent = target; done=true; setTimeout(endSplash,1100); return; }
+  setTimeout(scramble, 70);
+}
+function endSplash(){
+  done=true;
+  document.getElementById('splash').classList.add('gone');
+}
+window.addEventListener('load',()=>{ scramble(); });
+// safety auto-end
+setTimeout(endSplash, 6000);
+
+// ---- nav ----
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>{ nav.classList.toggle('solid', window.scrollY>40); });
+function toggleMenu(){ const l=document.getElementById('navlinks'); l.classList.toggle('open');
+  document.getElementById('menubtn').textContent = l.classList.contains('open')?'✕':'☰'; }
+function closeMenu(){ document.getElementById('navlinks').classList.remove('open');
+  document.getElementById('menubtn').textContent='☰'; }
+
+// ---- reveal on scroll ----
+const io=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(r=>io.observe(r));
+
+// ---- count up ----
+const counted=new WeakSet();
+const cio=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting) return;
+    e.target.querySelectorAll('[data-count]').forEach(n=>{
+      if(counted.has(n)) return; counted.add(n);
+      const tgt=+n.dataset.count, suf=n.dataset.suffix||''; let cur=0;
+      const step=tgt/45;
+      const t=setInterval(()=>{ cur+=step; if(cur>=tgt){cur=tgt;clearInterval(t);}
+        n.textContent=Math.floor(cur).toLocaleString()+suf; },20);
+    });
+  });
+},{threshold:.4});
+document.querySelectorAll('.metric-grid').forEach(m=>cio.observe(m));
+
+// ---- language bars ----
+const lio=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(!e.isIntersecting) return;
+    e.target.querySelectorAll('.lang-fill').forEach(f=>{ f.style.width=f.dataset.w+'%'; });
+    lio.unobserve(e.target);
+  });
+},{threshold:.3});
+const langs=document.getElementById('langs'); if(langs) lio.observe(langs);
+
+// ---- leadership cards ----
+function toggleCard(c){ c.classList.toggle('open'); }
+
+// ---- game player ----
+// To embed the game so it plays INSIDE this page, open itch.io →
+// Edit Game → Distribute → "Embed game", copy the numeric ID from the
+// embed-upload URL, and paste it below. Leave empty to open in a new tab.
+const ITCH_EMBED_ID = ""; // e.g. "2368949"
+const ITCH_URL = "https://dream-decypher.itch.io/decypher1-dream-intruder";
+
+function loadGame(){
+  const frame=document.querySelector('.proj-frame');
+  const poster=document.getElementById('poster');
+  if(ITCH_EMBED_ID){
+    const ifr=document.createElement('iframe');
+    ifr.src="https://itch.io/embed-upload/"+ITCH_EMBED_ID+"?color=222736";
+    ifr.allowFullscreen=true;
+    ifr.allow="autoplay; fullscreen";
+    frame.appendChild(ifr);
+    poster.classList.add('hidden');
+  } else {
+    window.open(ITCH_URL,"_blank","noopener");
+  }
+}
+
+// ---- download CV ----
+document.getElementById('dlBtn').addEventListener('click',(e)=>{
+  e.preventDefault();
+  const a=document.createElement('a'); a.href="An_Phan_CV.pdf"; a.download="An_Phan_CV.pdf";
+  document.body.appendChild(a); a.click(); a.remove();
+});
+
+// ---- easter egg ----
+function reveal(){
+  const t=document.getElementById('egg'); t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3200);
+}
+let keys=[];
+window.addEventListener('keydown',(e)=>{
+  keys.push(e.key.toLowerCase()); keys=keys.slice(-6);
+  if(keys.join('')==='cypher'){ reveal(); }
+});
+</script>
+</body>
+</html>
